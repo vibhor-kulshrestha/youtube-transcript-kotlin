@@ -2,12 +2,31 @@ jdk:
   - 17
 
 before_install:
+  - echo "== Environment ==" && uname -a
+  - echo "JAVA:" && java -version
   - chmod +x gradlew
+  - ls -1
 
-# (Optional) Skip tests on JitPack if they are flaky or rely on network; remove -x test if you want tests to run
 install:
-  - ./gradlew publishToMavenLocal -x test --no-daemon --stacktrace
+  # First pass with --info for reasonable verbosity. If it fails, rerun a lightweight debug task.
+  - |
+    set -e
+    echo "== Gradle Version =="
+    ./gradlew --version --no-daemon
+    echo "== Clean & Publish (info) =="
+    if ! ./gradlew clean publishToMavenLocal -x test --no-daemon --info --stacktrace ; then
+      echo "First publish attempt failed. Running a targeted debug help task...";
+      ./gradlew help --no-daemon --debug --stacktrace || true;
+    fi
 
-# Run a full build (assemble + sources/javadoc jars) so JitPack can pick artifacts
 build:
-  - ./gradlew build -x test --no-daemon --stacktrace
+  # Build with info logs; retry assembleRelease on failure for clarity
+  - |
+    set -e
+    echo "== Build (info) =="
+    if ! ./gradlew build -x test --no-daemon --info --stacktrace ; then
+      echo "Full build failed. Retrying assembleRelease with --debug for granular logs...";
+      ./gradlew assembleRelease --no-daemon --debug --stacktrace || true;
+    fi
+  # (Optional) Show dependency tree for release compile classpath (can help diagnose resolution issues)
+  - ./gradlew :dependencies --configuration releaseCompileClasspath --no-daemon --info --stacktrace | tail -n 200

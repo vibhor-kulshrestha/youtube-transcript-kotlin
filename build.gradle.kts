@@ -1,13 +1,15 @@
 plugins {
-    // Use stable, verified versions
+    // Use stable, compatible versions (AGP 8.5.x + Kotlin 1.9.24)
     id("com.android.library") version "8.5.2"
-    id("org.jetbrains.kotlin.android") version "2.2.20"
+    id("org.jetbrains.kotlin.android") version "1.9.24"
     id("maven-publish")
 }
 
-// Use JitPack-friendly group (com.github.<GitHubUser>) so consumers can depend directly
+// JitPack-friendly coordinates
 group = "com.github.vibhor-kulshrestha"
 version = "1.0.5"
+
+val libVersion = version
 
 android {
     namespace = "com.youtubetranscript"
@@ -22,7 +24,7 @@ android {
         
         // Library metadata
         buildConfigField("String", "LIBRARY_NAME", "\"youtube-transcript-kotlin\"")
-        buildConfigField("String", "LIBRARY_VERSION", "\"1.0.5\"")
+        buildConfigField("String", "LIBRARY_VERSION", "\"${libVersion}\"")
     }
 
     buildTypes {
@@ -63,21 +65,17 @@ repositories {
 }
 
 dependencies {
-    // Core Android dependencies (stable)
-    implementation("androidx.core:core-ktx:1.17.0")
-    implementation("androidx.annotation:annotation:1.9.1")
+    // Revert to widely-used stable versions to reduce JitPack resolution risk
+    implementation("androidx.core:core-ktx:1.13.1")
+    implementation("androidx.annotation:annotation:1.8.0")
 
-    // Coroutines (match Kotlin 1.9.x line)
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.1")
 
-    // OkHttp (stable 4.x line for broad compatibility)
-    implementation("com.squareup.okhttp3:okhttp:5.1.0")
-    testImplementation("com.squareup.okhttp3:mockwebserver:5.1.0")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    testImplementation("com.squareup.okhttp3:mockwebserver:4.12.0")
 
-    // JUnit
     testImplementation("junit:junit:4.13.2")
-
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 }
