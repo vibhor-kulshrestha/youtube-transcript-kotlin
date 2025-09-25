@@ -59,7 +59,7 @@ dependencyResolutionManagement {
 Using the published coordinates (group = `com.github.vibhor-kulshrestha`):
 ```gradle
 dependencies {
-    implementation("com.github.vibhor-kulshrestha:youtube-transcript-kotlin:1.0.0")
+    implementation("com.github.vibhor-kulshrestha:youtube-transcript-kotlin:1.0.5")
 }
 ```
 If you reference a commit instead of a tag, use the short commit hash as the version.
@@ -178,9 +178,9 @@ class TranscriptList {
 ## Releasing (Maintainers)
 1. Update `version` in `build.gradle.kts` (root module)
 2. Commit and push
-3. Create a Git tag matching the version (e.g. `git tag v1.1.0 && git push origin v1.1.0`)
+3. Create a Git tag matching the version (e.g. `git tag v1.0.6 && git push origin v1.0.6`)
 4. Visit JitPack page and build the new tag
-5. Consumers can then use the new version: `implementation("com.github.vibhor-kulshrestha:youtube-transcript-kotlin:v1.1.0")`
+5. Consumers can then use the new version: `implementation("com.github.vibhor-kulshrestha:youtube-transcript-kotlin:1.0.6")`
 
 ## License
 
