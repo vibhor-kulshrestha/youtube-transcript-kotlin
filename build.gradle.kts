@@ -1,7 +1,6 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
-    id("kotlin-kapt")
     id("maven-publish")
 }
 
@@ -64,6 +63,7 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
     
     // JSON parsing - using Android's built-in JSON classes
+    // No external JSON library needed - Android provides org.json classes
 
     // Testing dependencies
     testImplementation("junit:junit:4.13.2")
@@ -74,7 +74,7 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 }
 
-// Publishing configuration
+// Publishing configuration for JitPack
 afterEvaluate {
     publishing {
         publications {
