@@ -43,6 +43,13 @@ android {
     buildFeatures {
         buildConfig = true
     }
+    
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+            withJavadocJar()
+        }
+    }
 }
 
 dependencies {
@@ -56,9 +63,8 @@ dependencies {
     // OkHttp for network requests
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
     
-    // JSON parsing
-    implementation("org.json:json:20231013")
-    
+    // JSON parsing - using Android's built-in JSON classes
+
     // Testing dependencies
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
@@ -82,7 +88,7 @@ afterEvaluate {
                 pom {
                     name.set("YouTube Transcript Kotlin")
                     description.set("A Kotlin library for fetching YouTube video transcripts, similar to Python's youtube-transcript-api")
-                    url.set("https://github.com/Vibhor-Wz/Ai-Assistant")
+                    url.set("https://github.com/vibhor-kulshrestha/youtube-transcript-kotlin")
                     
                     licenses {
                         license {
@@ -93,16 +99,16 @@ afterEvaluate {
                     
                     developers {
                         developer {
-                            id.set("Vibhor-Wz")
+                            id.set("vibhor-kulshrestha")
                             name.set("Vibhor Kulshrestha")
-                            email.set("vibhor.kulshrestha@example.com")
+                            email.set("vibhorkulshrestha2001@gmail.com")
                         }
                     }
                     
                     scm {
-                        connection.set("scm:git:git://github.com/Vibhor-Wz/Ai-Assistant.git")
-                        developerConnection.set("scm:git:ssh://github.com:Vibhor-Wz/Ai-Assistant.git")
-                        url.set("https://github.com/Vibhor-Wz/Ai-Assistant")
+                        connection.set("scm:git:git://github.com/vibhor-kulshrestha/youtube-transcript-kotlin.git")
+                        developerConnection.set("scm:git:ssh://github.com:vibhor-kulshrestha/youtube-transcript-kotlin.git")
+                        url.set("https://github.com/vibhor-kulshrestha/youtube-transcript-kotlin")
                     }
                 }
             }
