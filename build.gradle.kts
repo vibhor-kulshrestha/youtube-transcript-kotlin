@@ -1,6 +1,6 @@
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
+    id("com.android.library") version "8.12.3"
+    id("org.jetbrains.kotlin.android") version "1.9.0"
     id("maven-publish")
 }
 
@@ -49,6 +49,11 @@ android {
             withJavadocJar()
         }
     }
+}
+
+repositories {
+    google()
+    mavenCentral()
 }
 
 dependencies {
