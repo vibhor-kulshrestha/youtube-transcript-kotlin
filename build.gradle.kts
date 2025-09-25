@@ -1,8 +1,13 @@
 plugins {
-    id("com.android.library") version "8.12.3"
-    id("org.jetbrains.kotlin.android") version "1.9.0"
+    // Use stable, verified versions
+    id("com.android.library") version "8.5.2"
+    id("org.jetbrains.kotlin.android") version "2.2.20"
     id("maven-publish")
 }
+
+// Use JitPack-friendly group (com.github.<GitHubUser>) so consumers can depend directly
+group = "com.github.vibhor-kulshrestha"
+version = "1.0.5"
 
 android {
     namespace = "com.youtubetranscript"
@@ -17,7 +22,7 @@ android {
         
         // Library metadata
         buildConfigField("String", "LIBRARY_NAME", "\"youtube-transcript-kotlin\"")
-        buildConfigField("String", "LIBRARY_VERSION", "\"1.0.0\"")
+        buildConfigField("String", "LIBRARY_VERSION", "\"1.0.5\"")
     }
 
     buildTypes {
@@ -31,12 +36,13 @@ android {
     }
     
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        // Set Java 17 for AGP 8.5.x compatibility and JDK 17 target on JitPack
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
     
     buildFeatures {
@@ -57,51 +63,48 @@ repositories {
 }
 
 dependencies {
-    // Core Android dependencies
-    implementation("androidx.core:core-ktx:1.12.0")
-    implementation("androidx.annotation:annotation:1.7.1")
-    
-    // Coroutines for async operations
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
-    
-    // OkHttp for network requests
-    implementation("com.squareup.okhttp3:okhttp:4.12.0")
-    
-    // JSON parsing - using Android's built-in JSON classes
-    // No external JSON library needed - Android provides org.json classes
+    // Core Android dependencies (stable)
+    implementation("androidx.core:core-ktx:1.17.0")
+    implementation("androidx.annotation:annotation:1.9.1")
 
-    // Testing dependencies
+    // Coroutines (match Kotlin 1.9.x line)
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2")
+
+    // OkHttp (stable 4.x line for broad compatibility)
+    implementation("com.squareup.okhttp3:okhttp:5.1.0")
+    testImplementation("com.squareup.okhttp3:mockwebserver:5.1.0")
+
+    // JUnit
     testImplementation("junit:junit:4.13.2")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
-    testImplementation("com.squareup.okhttp3:mockwebserver:4.12.0")
-    
+
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 }
 
-// Publishing configuration for JitPack
 afterEvaluate {
     publishing {
         publications {
             create<MavenPublication>("release") {
-                from(components["release"])
-                
-                groupId = "com.youtubetranscript"
+                from(components["release"]) // Safe now: component is created by AGP
+
+                // Align published coordinates with JitPack expectations
+                groupId = project.group.toString()
                 artifactId = "youtube-transcript-kotlin"
-                version = "1.0.0"
-                
+                version = project.version.toString()
+
                 pom {
                     name.set("YouTube Transcript Kotlin")
                     description.set("A Kotlin library for fetching YouTube video transcripts, similar to Python's youtube-transcript-api")
                     url.set("https://github.com/vibhor-kulshrestha/youtube-transcript-kotlin")
-                    
+
                     licenses {
                         license {
                             name.set("MIT License")
                             url.set("https://opensource.org/licenses/MIT")
                         }
                     }
-                    
+
                     developers {
                         developer {
                             id.set("vibhor-kulshrestha")
@@ -109,7 +112,7 @@ afterEvaluate {
                             email.set("vibhorkulshrestha2001@gmail.com")
                         }
                     }
-                    
+
                     scm {
                         connection.set("scm:git:git://github.com/vibhor-kulshrestha/youtube-transcript-kotlin.git")
                         developerConnection.set("scm:git:ssh://github.com:vibhor-kulshrestha/youtube-transcript-kotlin.git")

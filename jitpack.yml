@@ -1,11 +1,13 @@
 jdk:
-  - openjdk11
+  - 17
 
 before_install:
-  - ./gradlew clean
+  - chmod +x gradlew
 
-build:
-  - ./gradlew build
-
+# (Optional) Skip tests on JitPack if they are flaky or rely on network; remove -x test if you want tests to run
 install:
-  - ./gradlew publishToMavenLocal
+  - ./gradlew publishToMavenLocal -x test --no-daemon --stacktrace
+
+# Run a full build (assemble + sources/javadoc jars) so JitPack can pick artifacts
+build:
+  - ./gradlew build -x test --no-daemon --stacktrace

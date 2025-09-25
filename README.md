@@ -1,5 +1,7 @@
 # YouTube Transcript Kotlin
 
+[![](https://jitpack.io/v/vibhor-kulshrestha/youtube-transcript-kotlin.svg)](https://jitpack.io/#vibhor-kulshrestha/youtube-transcript-kotlin)
+
 A Kotlin/Android library for fetching YouTube video transcripts, similar to Python's `youtube-transcript-api`.
 
 ## Features
@@ -13,23 +15,63 @@ A Kotlin/Android library for fetching YouTube video transcripts, similar to Pyth
 
 ## Installation
 
-### JitPack
-
-Add JitPack to your project's `build.gradle` (root level):
-
+### 1. Add JitPack repository
+For Groovy (settings.gradle):
 ```gradle
-allprojects {
+pluginManagement {
     repositories {
         maven { url 'https://jitpack.io' }
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
+dependencyResolutionManagement {
+    repositories {
+        maven { url 'https://jitpack.io' }
+        google()
+        mavenCentral()
+    }
+}
+```
+For Kotlin DSL (settings.gradle.kts):
+```kotlin
+pluginManagement {
+    repositories {
+        maven("https://jitpack.io")
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
+dependencyResolutionManagement {
+    repositories {
+        maven("https://jitpack.io")
+        google()
+        mavenCentral()
     }
 }
 ```
 
-Add the dependency to your app's `build.gradle`:
-
+### 2. Add dependency
+Using the published coordinates (group = `com.github.vibhor-kulshrestha`):
 ```gradle
 dependencies {
-    implementation 'com.github.vibhor-kulshrestha:youtube-transcript-kotlin:v1.0.0'
+    implementation("com.github.vibhor-kulshrestha:youtube-transcript-kotlin:1.0.0")
+}
+```
+If you reference a commit instead of a tag, use the short commit hash as the version.
+
+### 3. (Optional) Enable Java 17
+```gradle
+android {
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+    kotlinOptions { jvmTarget = "17" }
 }
 ```
 
@@ -38,7 +80,6 @@ dependencies {
 ### Basic Usage
 
 ```kotlin
-
 // Extract video ID from URL
 val videoId = YouTubeTranscriptApi.extractVideoId("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
 
@@ -129,17 +170,25 @@ class TranscriptList {
 
 ## Requirements
 
-- Android API 21+ (Android 5.0)
-- Kotlin 1.8+
+- Android API 21+
+- Kotlin 1.9+
+- Java 17 (toolchain / compile options)
 - OkHttp 4.12.0+
+
+## Releasing (Maintainers)
+1. Update `version` in `build.gradle.kts` (root module)
+2. Commit and push
+3. Create a Git tag matching the version (e.g. `git tag v1.1.0 && git push origin v1.1.0`)
+4. Visit JitPack page and build the new tag
+5. Consumers can then use the new version: `implementation("com.github.vibhor-kulshrestha:youtube-transcript-kotlin:v1.1.0")`
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+MIT License - see [LICENSE](LICENSE)
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Contributions are welcome! Feel free to open issues and PRs.
 
 ## Acknowledgments
 
