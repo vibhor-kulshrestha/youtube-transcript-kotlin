@@ -1,18 +1,16 @@
-# Consumer ProGuard rules for YouTube Transcript Kotlin library
-# These rules will be applied to the consuming app
+# Consumer ProGuard rules for youtube-transcript-kotlin
 
-# Keep the main API classes
--keep class com.youtubetranscript.YouTubeTranscriptApi { *; }
+# Keep all public classes and methods
+-keep public class com.youtubetranscript.** { *; }
+
+# Keep all data classes
 -keep class com.youtubetranscript.models.** { *; }
+
+# Keep all core classes
 -keep class com.youtubetranscript.core.** { *; }
 
 # Keep exception classes
--keep class com.youtubetranscript.*Exception { *; }
+-keep class com.youtubetranscript.TranscriptException { *; }
 
-# Keep OkHttp classes (if not already included in the app)
--dontwarn com.squareup.okhttp3.**
--keep class com.squareup.okhttp3.** { *; }
-
-# Keep JSON classes (if not already included in the app)
--dontwarn org.json.**
--keep class org.json.** { *; }
+# Keep the main API class
+-keep class com.youtubetranscript.YouTubeTranscriptApi { *; }
