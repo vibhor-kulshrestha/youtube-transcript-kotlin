@@ -29,7 +29,7 @@ Add the dependency to your app's `build.gradle`:
 
 ```gradle
 dependencies {
-    implementation 'com.github.YourUsername:Ai-Assistant:youtube-transcript-kotlin-v1.0.0'
+    implementation 'com.github.vibhor-kulshrestha:youtube-transcript-kotlin:v1.0.0'
 }
 ```
 
