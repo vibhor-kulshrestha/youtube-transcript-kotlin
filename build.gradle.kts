@@ -84,9 +84,9 @@ publishing {
     publications {
         // Kotlin DSL equivalent of Groovy example you saw
         create<MavenPublication>("release") {
-            groupId = project.group.toString()
+            groupId = "com.github.vibhor-kulshrestha"
             artifactId = "youtube-transcript-kotlin"
-            version = project.version.toString()
+            version = "1.0.5"
 
             // Defer attaching the Android release component until variants are ready
             afterEvaluate { from(components["release"]) }
